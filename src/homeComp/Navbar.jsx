@@ -1,12 +1,12 @@
 import { Search, Globe } from "lucide-react";
-
+import Image from "../assets/image.png"
 function Navbar() {
   return (
     <nav className="navbar">
 
       <div className="logo">
         <img
-          src="https://upload.wikimedia.org/wikipedia/commons/6/6b/Zoho-logo.png"
+          src={Image}
           alt="logo"
         />
       </div>
