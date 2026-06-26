@@ -35,6 +35,12 @@ font-weight:500;
 
 .nav-links li{
 cursor:pointer;
+transition:color 0.3s ease;
+position:relative;
+}
+
+.nav-links li:hover{
+color:#5b4bff;
 }
 
 .nav-right{
@@ -49,6 +55,12 @@ background:none;
 color:red;
 font-size:16px;
 cursor:pointer;
+transition:color 0.3s ease;
+}
+
+.signin:hover{
+color:#cc0000;
+text-decoration:underline;
 }
 
 .signup{
@@ -58,17 +70,26 @@ background:white;
 color:red;
 cursor:pointer;
 font-weight:600;
+transition:all 0.3s ease;
+border-radius:4px;
+}
+
+.signup:hover{
+background:red;
+color:white;
 }
 
 .hero{
 text-align:center;
 padding:80px 20px;
+background:linear-gradient(180deg,#f9f9ff 0%,#fff 100%);
 }
 
 .hero h1{
 font-size:68px;
 font-weight:800;
 line-height:1.2;
+margin-bottom:15px;
 }
 
 .hero span{
@@ -92,12 +113,16 @@ align-items:center;
 border:1px solid #eee;
 font-size:30px;
 font-weight:bold;
-transition:.3s;
+transition:all 0.3s ease;
+background:#fff;
+border-radius:6px;
 }
 
 .company-card:hover{
 background:#f6f6f6;
 transform:scale(1.03);
+box-shadow:0 2px 8px rgba(0,0,0,0.08);
+}
 }
 
 @media(max-width:768px){
