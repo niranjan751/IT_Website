@@ -1,0 +1,736 @@
+/* ────────────────────────────────────────────
+   AffiliateProgram.css
+   Zoho Affiliate Program – React stylesheet
+   ──────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap');
+
+/* ── Reset & Root ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --zoho-red:     #E02020;
+  --zoho-dark:    #1A1A2E;
+  --zoho-navy:    #16213E;
+  --zoho-blue:    #0F3460;
+  --zoho-accent:  #E94560;
+  --zoho-gold:    #F5A623;
+  --zoho-light:   #F7F9FC;
+  --zoho-white:   #FFFFFF;
+  --zoho-gray:    #6B7280;
+  --zoho-border:  #E5E7EB;
+  --text-primary:   #111827;
+  --text-secondary: #4B5563;
+  --radius:   12px;
+  --shadow:   0 4px 24px rgba(0,0,0,0.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,0.14);
+}
+
+.ap-root {
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  background: var(--zoho-white);
+  line-height: 1.6;
+}
+
+/* ── Utilities ── */
+.container {
+  max-width: 1160px;
+  margin-inline: auto;
+}
+.text-center { text-align: center; }
+
+/* ── NAV ── */
+.ap-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--zoho-white);
+  border-bottom: 1px solid var(--zoho-border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--zoho-red);
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+.nav-logo span {
+  color: var(--text-primary);
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 6px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+}
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--zoho-red); }
+
+.btn-nav {
+  background: var(--zoho-red) !important;
+  color: #fff !important;
+  padding: 8px 20px;
+  border-radius: 6px;
+  font-weight: 600 !important;
+}
+.btn-nav:hover { background: #c01818 !important; }
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--zoho-dark) 0%, var(--zoho-blue) 60%, #1a3a5c 100%);
+  color: #fff;
+  padding: 100px 40px 80px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 70% 30%, rgba(233,69,96,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, rgba(15,52,96,0.5) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  background: rgba(233,69,96,0.2);
+  border: 1px solid rgba(233,69,96,0.4);
+  color: #f9a8b8;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: 100px;
+  margin-bottom: 24px;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 800;
+  line-height: 1.12;
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--zoho-gold);
+}
+
+.hero p {
+  max-width: 600px;
+  margin: 0 auto 40px;
+  font-size: 18px;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.7;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--zoho-accent);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 4px 20px rgba(233,69,96,0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(233,69,96,0.5);
+}
+
+.btn-secondary {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.25);
+  backdrop-filter: blur(6px);
+  transition: background 0.2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+.hero-note {
+  margin-top: 20px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+}
+.hero-note a { color: rgba(255,255,255,0.7); }
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--zoho-white);
+  border-bottom: 1px solid var(--zoho-border);
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  flex: 1;
+  min-width: 200px;
+  text-align: center;
+  padding: 20px 32px;
+  border-right: 1px solid var(--zoho-border);
+}
+.stat-item:last-child { border-right: none; }
+
+.stat-number {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--zoho-red);
+  line-height: 1;
+  font-family: 'Playfair Display', serif;
+}
+.stat-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+  max-width: 160px;
+  margin-inline: auto;
+}
+
+/* ── SHARED SECTION STYLES ── */
+section {
+  padding: 80px 40px;
+}
+
+.section-eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--zoho-red);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+.section-subtitle {
+  font-size: 17px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  line-height: 1.7;
+}
+.center-subtitle { margin-inline: auto; }
+
+/* ── FIT SECTION ── */
+.fit-section { background: var(--zoho-light); }
+
+.fit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+
+.fit-card {
+  background: var(--zoho-white);
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--zoho-border);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.fit-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-4px);
+}
+
+.fit-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #fff0f2, #ffe0e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 18px;
+}
+
+.fit-card h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.fit-card p  { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+/* ── HOW IT WORKS ── */
+.how-section { background: var(--zoho-white); }
+
+.how-steps {
+  display: flex;
+  gap: 0;
+  margin-top: 56px;
+  position: relative;
+}
+.how-steps::before {
+  content: '';
+  position: absolute;
+  top: 40px;
+  left: calc(16.6% + 20px);
+  right: calc(16.6% + 20px);
+  height: 2px;
+  background: linear-gradient(90deg, var(--zoho-red), var(--zoho-gold));
+  z-index: 0;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+  z-index: 1;
+}
+.step-num {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--zoho-red), var(--zoho-accent));
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: 0 6px 20px rgba(233,69,96,0.35);
+  font-family: 'Playfair Display', serif;
+}
+.step h4 { font-size: 17px; font-weight: 700; margin-bottom: 10px; }
+.step p  { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+
+/* ── TIERS ── */
+.tiers-section {
+  background: var(--zoho-dark);
+  color: #fff;
+}
+.tiers-section .section-title { color: #fff; }
+.tiers-eyebrow { color: #f9a8b8 !important; }
+.tiers-subtitle {
+  color: rgba(255,255,255,0.65) !important;
+  margin-inline: auto;
+}
+
+.tiers-table-wrap {
+  overflow-x: auto;
+  margin-top: 48px;
+}
+.tiers-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+.tiers-table th {
+  padding: 18px 24px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.tiers-table th:first-child { text-align: left; }
+
+.tier-badge {
+  display: inline-block;
+  padding: 4px 14px;
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.badge-standard { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+.badge-super    { background: rgba(245,166,35,0.2);  color: var(--zoho-gold); }
+.badge-elite    { background: rgba(233,69,96,0.25);  color: #f9a8b8; }
+
+.tiers-table td {
+  padding: 16px 24px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+  color: rgba(255,255,255,0.8);
+}
+.tiers-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+}
+.tiers-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+.commission-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--zoho-gold);
+}
+.check { color: #4ade80; font-size: 18px; }
+
+/* ── TESTIMONIALS ── */
+.testimonials-section { background: var(--zoho-light); }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-top: 48px;
+}
+.testimonial-card {
+  background: var(--zoho-white);
+  border-radius: var(--radius);
+  padding: 32px;
+  border: 1px solid var(--zoho-border);
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.quote-mark {
+  font-size: 64px;
+  line-height: 1;
+  color: var(--zoho-red);
+  opacity: 0.15;
+  font-family: 'Playfair Display', serif;
+  position: absolute;
+  top: 12px;
+  left: 24px;
+}
+.testimonial-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 1;
+}
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--zoho-red), var(--zoho-gold));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.author-name  { font-size: 14px; font-weight: 700; }
+.author-title { font-size: 12px; color: var(--text-secondary); }
+
+/* ── CALCULATOR ── */
+.calc-section { background: var(--zoho-white); }
+
+.calc-wrapper {
+  background: var(--zoho-light);
+  border-radius: 16px;
+  padding: 48px;
+  border: 1px solid var(--zoho-border);
+  margin-top: 48px;
+}
+.calc-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.calc-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.calc-field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.calc-field input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--zoho-border);
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+.calc-field input:focus {
+  outline: none;
+  border-color: var(--zoho-red);
+}
+.calc-btn {
+  background: var(--zoho-red);
+  color: #fff;
+  border: none;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.calc-btn:hover { background: #c01818; }
+
+.calc-result {
+  text-align: center;
+  padding: 32px;
+  background: linear-gradient(135deg, var(--zoho-dark), var(--zoho-blue));
+  border-radius: 12px;
+  color: #fff;
+}
+.result-label {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+.result-amount {
+  font-size: 56px;
+  font-weight: 800;
+  font-family: 'Playfair Display', serif;
+  color: var(--zoho-gold);
+  line-height: 1;
+}
+.result-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.55);
+  margin-top: 8px;
+}
+.monthly-bars {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  height: 80px;
+  margin-top: 24px;
+}
+.bar-wrap { flex: 1; text-align: center; }
+.bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--zoho-accent), rgba(233,69,96,0.4));
+  min-height: 4px;
+  transition: height 0.4s ease;
+}
+.bar-month {
+  font-size: 9px;
+  color: rgba(255,255,255,0.4);
+  margin-top: 4px;
+}
+
+/* ── PERKS ── */
+.perks-section { background: var(--zoho-white); }
+
+.perks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-top: 48px;
+}
+.perk-item {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  padding: 28px;
+  border-radius: var(--radius);
+  border: 1px solid var(--zoho-border);
+  transition: box-shadow 0.2s;
+}
+.perk-item:hover { box-shadow: var(--shadow); }
+.perk-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: linear-gradient(135deg, #fff0f2, #ffe0e5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+.perk-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+.perk-item p  { font-size: 14px; color: var(--text-secondary); line-height: 1.65; }
+
+/* ── FAQ ── */
+.faq-section { background: var(--zoho-light); }
+
+.faq-list {
+  max-width: 800px;
+  margin: 48px auto 0;
+}
+.faq-item {
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid var(--zoho-border);
+  margin-bottom: 12px;
+  overflow: hidden;
+}
+.faq-question {
+  padding: 20px 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 15px;
+  font-weight: 600;
+  transition: background 0.15s;
+  user-select: none;
+}
+.faq-question:hover { background: #fafafa; }
+
+.faq-toggle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--zoho-light);
+  border: 1.5px solid var(--zoho-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s, background 0.2s;
+  color: var(--zoho-red);
+}
+.faq-item.open .faq-toggle {
+  transform: rotate(45deg);
+  background: var(--zoho-red);
+  color: #fff;
+  border-color: var(--zoho-red);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, padding 0.3s;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  padding: 0 24px;
+}
+.faq-item.open .faq-answer {
+  max-height: 300px;
+  padding: 0 24px 20px;
+}
+
+/* ── CTA BANNER ── */
+.cta-banner {
+  background: linear-gradient(135deg, var(--zoho-red), var(--zoho-accent) 50%, var(--zoho-gold));
+  padding: 80px 40px;
+  text-align: center;
+  color: #fff;
+}
+.cta-banner h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 4vw, 42px);
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+.cta-banner p {
+  font-size: 17px;
+  opacity: 0.88;
+  margin-bottom: 36px;
+}
+.btn-white {
+  background: #fff;
+  color: var(--zoho-red);
+  padding: 15px 40px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 800;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.15s, box-shadow 0.15s;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+}
+.btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.2);
+}
+
+/* ── FOOTER ── */
+.ap-footer {
+  background: var(--zoho-dark);
+  color: rgba(255,255,255,0.5);
+  padding: 32px 40px;
+  text-align: center;
+  font-size: 13px;
+}
+.ap-footer a { color: rgba(255,255,255,0.65); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .ap-nav { padding: 0 20px; }
+  .nav-links { display: none; }
+
+  section { padding: 60px 20px; }
+
+  .stats-bar { flex-direction: column; padding: 20px; }
+  .stat-item {
+    border-right: none;
+    border-bottom: 1px solid var(--zoho-border);
+    padding: 20px;
+  }
+  .stat-item:last-child { border-bottom: none; }
+
+  .how-steps { flex-direction: column; }
+  .how-steps::before { display: none; }
+
+  .calc-grid { grid-template-columns: 1fr; }
+  .calc-wrapper { padding: 28px 20px; }
+
+  .cta-banner { padding: 60px 20px; }
+  .ap-footer { padding: 24px 20px; }
+}
