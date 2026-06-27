@@ -1,5 +1,5 @@
 import { useState } from "react";
-import "./AffiliateProgram.css";
+import "../../styles/AffiliateProgram.css";
 
 const NAV_LINKS = [
   { label: "Who's a Fit", href: "#fit" },

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import "./CustomerStories.css";
+import "../../styles/CustomerStories.css";
 
 // ── Data ────────────────────────────────────────────────────────
 
