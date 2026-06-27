@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/SignIn.css";
+import { useAuth } from "../context/AuthContext";
 
 /* ── Icons ─────────────────────────────────────────────────────── */
 function ZohoLogo({ size = 32 }) {
@@ -62,29 +63,37 @@ const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
 
 /* ── Tab: Sign In ─────────────────────────────────────────────── */
 function SignInTab({ onDone }) {
+  const { signIn, loading } = useAuth();
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
   const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
   const onChange = (e) => {
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
     if (errors[e.target.name]) setErrors((p) => ({ ...p, [e.target.name]: "" }));
+    if (apiError) setApiError("");
   };
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault();
     const errs = {};
     if (!form.email) errs.email = "Email is required.";
     else if (!isValidEmail(form.email)) errs.email = "Enter a valid email.";
     if (!form.password) errs.password = "Password is required.";
     if (Object.keys(errs).length) { setErrors(errs); return; }
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onDone(form.email); }, 900);
+
+    const result = await signIn(form.email, form.password);
+    if (result.success) {
+      onDone(result.user);
+    } else {
+      setApiError(result.error || "Sign in failed. Please try again.");
+    }
   };
 
   return (
     <form className="si-form" onSubmit={submit} noValidate>
+      {apiError && <div className="si-api-error">{apiError}</div>}
       <div className="si-field">
         <label className="si-label" htmlFor="signin-email">Email address</label>
         <input id="signin-email" name="email" type="email"
@@ -121,34 +130,36 @@ function SignInTab({ onDone }) {
 
 /* ── Tab: Log In (SSO / Social) ───────────────────────────────── */
 function LogInTab({ onDone }) {
+  const { ssoLogin, loading } = useAuth();
   const [org, setOrg] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
 
-  const handleSocial = (provider) => {
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onDone(`via ${provider}`); }, 800);
-  };
-
-  const handleSso = (e) => {
+  const handleSso = async (e) => {
     e.preventDefault();
     if (!org.trim()) { setError("Please enter your organization domain."); return; }
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onDone(org); }, 900);
+    setApiError("");
+    const result = await ssoLogin(org.trim());
+    if (result.success) {
+      onDone(result.user);
+    } else {
+      setApiError(result.error || "SSO login failed. Please try again.");
+    }
   };
 
   return (
     <div className="si-login-tab">
       <p className="si-tab-desc">Log in with your organization SSO or a social account — no password needed.</p>
+      {apiError && <div className="si-api-error">{apiError}</div>}
 
       <div className="si-socials-lg">
-        <button id="login-google" className="si-social-btn-lg" onClick={() => handleSocial("Google")} disabled={loading}>
+        <button id="login-google" className="si-social-btn-lg" disabled={loading}>
           <GoogleIcon /> Continue with Google
         </button>
-        <button id="login-microsoft" className="si-social-btn-lg" onClick={() => handleSocial("Microsoft")} disabled={loading}>
+        <button id="login-microsoft" className="si-social-btn-lg" disabled={loading}>
           <MicrosoftIcon /> Continue with Microsoft
         </button>
-        <button id="login-github" className="si-social-btn-lg" onClick={() => handleSocial("GitHub")} disabled={loading}>
+        <button id="login-github" className="si-social-btn-lg" disabled={loading}>
           <GithubIcon /> Continue with GitHub
         </button>
       </div>
@@ -186,14 +197,17 @@ const PLANS_LIST = [
 ];
 
 function GetReadyTab({ onDone }) {
+  const { signUp, loading } = useAuth();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState({ name: "", email: "", company: "", size: "", role: "", plan: "free" });
+  const [form, setForm] = useState({ name: "", email: "", company: "", size: "", role: "", plan: "free", password: "" });
   const [errors, setErrors] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [apiError, setApiError] = useState("");
+  const [showPass, setShowPass] = useState(false);
 
   const set = (field, val) => {
     setForm((p) => ({ ...p, [field]: val }));
     if (errors[field]) setErrors((p) => ({ ...p, [field]: "" }));
+    if (apiError) setApiError("");
   };
 
   const validateStep1 = () => {
@@ -202,6 +216,8 @@ function GetReadyTab({ onDone }) {
     if (!form.email.trim()) e.email = "Email is required.";
     else if (!isValidEmail(form.email)) e.email = "Enter a valid email.";
     if (!form.company.trim()) e.company = "Company name is required.";
+    if (!form.password.trim()) e.password = "Password is required.";
+    else if (form.password.length < 6) e.password = "Password must be at least 6 characters.";
     return e;
   };
 
@@ -225,9 +241,14 @@ function GetReadyTab({ onDone }) {
     setStep((s) => s + 1);
   };
 
-  const finish = () => {
-    setLoading(true);
-    setTimeout(() => { setLoading(false); onDone(form.email); }, 1000);
+  const finish = async () => {
+    setApiError("");
+    const result = await signUp(form);
+    if (result.success) {
+      onDone(result.user);
+    } else {
+      setApiError(result.error || "Registration failed. Please try again.");
+    }
   };
 
   return (
@@ -244,6 +265,8 @@ function GetReadyTab({ onDone }) {
           </div>
         ))}
       </div>
+
+      {apiError && <div className="si-api-error">{apiError}</div>}
 
       {/* Step 1 */}
       {step === 1 && (
@@ -269,6 +292,18 @@ function GetReadyTab({ onDone }) {
               <input id="gr-email" type="email" className={`si-input ${errors.email ? "si-input--error" : ""}`}
                 placeholder="you@company.com" value={form.email} onChange={(e) => set("email", e.target.value)} />
               {errors.email && <span className="si-error">{errors.email}</span>}
+            </div>
+            <div className="si-field">
+              <label className="si-label" htmlFor="gr-password">Create a password</label>
+              <div className="si-input-wrap">
+                <input id="gr-password" type={showPass ? "text" : "password"}
+                  className={`si-input ${errors.password ? "si-input--error" : ""}`}
+                  placeholder="Min. 6 characters" value={form.password} onChange={(e) => set("password", e.target.value)} />
+                <button type="button" className="si-eye" onClick={() => setShowPass(!showPass)}>
+                  {showPass ? <EyeOffIcon /> : <EyeIcon />}
+                </button>
+              </div>
+              {errors.password && <span className="si-error">{errors.password}</span>}
             </div>
           </div>
         </div>
@@ -358,40 +393,22 @@ function GetReadyTab({ onDone }) {
 
 /* ── Main Component ───────────────────────────────────────────── */
 const TABS = [
-  { id: "signin",  label: "Sign In",   emoji: "👤" },
-  { id: "login",   label: "Log In",    emoji: "🔐" },
-  { id: "getready",label: "Get Ready", emoji: "🚀" },
+  { id: "signin",   label: "Sign In",   emoji: "👤" },
+  { id: "login",    label: "Log In",    emoji: "🔐" },
+  { id: "getready", label: "Get Ready", emoji: "🚀" },
 ];
 
-export default function SignIn({ onNavigate }) {
+export default function SignIn({ onNavigate, onProfileRedirect }) {
   const [tab, setTab] = useState("signin");
-  const [doneEmail, setDoneEmail] = useState(null);
 
-  const handleDone = (email) => setDoneEmail(email);
-
-  const handleBack = () => {
-    setDoneEmail(null);
-    if (onNavigate) onNavigate("");
+  const handleDone = (user) => {
+    // Redirect to profile after successful auth
+    if (onProfileRedirect) onProfileRedirect(user);
   };
 
-  if (doneEmail) {
-    return (
-      <div className="si-root si-root--center">
-        <div className="si-success-page" id="si-success-state">
-          <div className="si-success-page__logo">
-            <ZohoLogo size={44} /><span>Zoho</span>
-          </div>
-          <div className="si-success-page__icon">🎉</div>
-          <h1>You're all set!</h1>
-          <p>Welcome to Zoho. You're signed in as <strong>{doneEmail}</strong>.</p>
-          <p className="si-success-page__sub">Redirecting you to your dashboard…</p>
-          <button className="si-btn si-btn--primary" onClick={handleBack}>
-            ← Back to Home
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const handleBack = () => {
+    if (onNavigate) onNavigate("");
+  };
 
   return (
     <div className="si-root">
@@ -438,7 +455,7 @@ export default function SignIn({ onNavigate }) {
             {TABS.map((t) => (
               <button key={t.id} id={`tab-${t.id}`}
                 className={`si-tab ${tab === t.id ? "si-tab--active" : ""}`}
-                onClick={() => { setTab(t.id); setDoneEmail(null); }}>
+                onClick={() => setTab(t.id)}>
                 <span className="si-tab__emoji">{t.emoji}</span>
                 <span>{t.label}</span>
               </button>

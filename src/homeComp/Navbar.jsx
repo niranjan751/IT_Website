@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Search, Globe, ChevronDown } from "lucide-react";
+import { Search, Globe, ChevronDown, User, LogOut } from "lucide-react";
 import Image from "../assets/image.png";
 
 const NAV_ITEMS = [
@@ -31,8 +31,14 @@ const NAV_ITEMS = [
   },
 ];
 
-function Navbar({ onSignIn }) {
+function getInitials(name) {
+  if (!name) return "U";
+  return name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
+}
+
+function Navbar({ onSignIn, onProfile, isLoggedIn, userName }) {
   const [openMenu, setOpenMenu] = useState(null);
+  const [showUserMenu, setShowUserMenu] = useState(false);
 
   return (
     <nav className="navbar">
@@ -73,13 +79,30 @@ function Navbar({ onSignIn }) {
         <Globe size={20} />
         <span>English</span>
 
-        <button className="signin" onClick={() => onSignIn && onSignIn()}>
-          Sign In
-        </button>
-
-        <button className="signup" onClick={() => onSignIn && onSignIn()}>
-          Sign Up
-        </button>
+        {isLoggedIn ? (
+          <div className="nav-user-wrap" onMouseEnter={() => setShowUserMenu(true)} onMouseLeave={() => setShowUserMenu(false)}>
+            <button className="nav-avatar" onClick={() => onProfile && onProfile()}>
+              {getInitials(userName)}
+            </button>
+            {showUserMenu && (
+              <div className="nav-user-menu">
+                <div className="nav-user-menu__name">{userName}</div>
+                <button className="nav-user-menu__item" onClick={() => onProfile && onProfile()}>
+                  <User size={14} /> My Profile
+                </button>
+              </div>
+            )}
+          </div>
+        ) : (
+          <>
+            <button className="signin" onClick={() => onSignIn && onSignIn()}>
+              Sign In
+            </button>
+            <button className="signup" onClick={() => onSignIn && onSignIn()}>
+              Sign Up
+            </button>
+          </>
+        )}
       </div>
     </nav>
   );
